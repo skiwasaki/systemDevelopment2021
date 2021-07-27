@@ -37,7 +37,7 @@ public class UserUpdateServlet extends HttpServlet {
 				String name = request.getParameter("updateName");
 				String picture = request.getParameter("updatePicture");
 				Statement state = users.createStatement();
-				state.executeUpdate("UPDATE user_table SET name='" + name + ",' picture='" + picture + "'WHERE id ='" + id + "'");
+				state.executeUpdate("UPDATE user_table SET name='" + name + "', picture='" + picture + "'WHERE id ='" + id + "'");
 				state.close();
 				users.close();
 				response.sendRedirect("/select"); //UserSelectServletを呼び出す

@@ -6,6 +6,7 @@ import java.sql.*;
 import javax.servlet.*;
 import javax.servlet.annotation.*;
 import javax.servlet.http.*;
+
 /**
  * Servlet implementation class UserInsertServlet
  */
@@ -28,25 +29,19 @@ public class UserInsertServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+
+		Connection users = null;
 		try {
-			Connection users = null;
-			try {
-				request.setCharacterEncoding("utf-8");
-				Class.forName("com.mysql.jdbc.Driver");
-				users = DriverManager.getConnection(
-						"jdbc:mysql://localhost/servlet_db?useUnicode=true&characterEncoding=utf8", "root", "");
-				String id = request.getParameter("insertId");
-				String name = request.getParameter("insertName");
-				String picture = request.getParameter("insertPicture");
-				Statement state = users.createStatement();
-				state.executeUpdate("INSERT INTO user_table VALUE('" + id + "','" + name +
-						"','" + picture + "')");
-				state.close();
-				users.close();
-				response.sendRedirect("/select"); //UserSelectServletを呼び出す
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
+			users = DBConnection.openConnection();
+			String id = request.getParameter("insertId");
+			String name = request.getParameter("insertName");
+			String picture = request.getParameter("insertPicture");
+			Statement state = users.createStatement();
+			state.executeUpdate("INSERT INTO user_table VALUE('" + id + "','" + name +
+					"','" + picture + "')");
+			DBConnection.closeConnection(users, state);
+			response.sendRedirect("/select"); //UserSelectServletを呼び出す
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

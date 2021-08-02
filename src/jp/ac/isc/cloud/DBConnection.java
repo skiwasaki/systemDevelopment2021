@@ -3,7 +3,8 @@ package jp.ac.isc.cloud;
 import java.sql.*;
 
 public final class DBConnection {
-	private DBConnection() {}
+	private DBConnection() {
+	}
 
 	public static Connection openConnection() {
 		//AzureのMySQLに接続するための情報（環境変数）を取得
@@ -32,8 +33,6 @@ public final class DBConnection {
 				continue;
 			}
 		}
-
-
 		Connection users = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
